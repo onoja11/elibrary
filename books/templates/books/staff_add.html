@@ -1,0 +1,74 @@
+{% extends "core/staff_base.html" %}
+
+{% block content %}
+<style>
+
+    .main {
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      color: #28a745;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input, .form-group select {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: #28a745;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: #218838;
+    }
+  </style>
+
+<main id="main" class="main">
+
+    <div class="container">
+<section class="form-container">
+    <h2>Add New Book</h2>
+<form method="post" action="{% url "staff_add_page" %}">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+        </div>
+    {% endfor %}
+    <div class="form-group">
+        <input type="submit" value="Add Book" class="btn btn-primary">
+    </div>
+</form>
+</section>
+
+</div>
+
+</main>
+{% endblock content %}

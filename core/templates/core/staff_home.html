@@ -1,0 +1,31 @@
+{% extends "core/staff_base.html" %}
+{% block content %}
+<!-- ======= Main Content ======= -->
+<main id="main" class="main">
+
+    <div class="container">
+
+      <!-- Dashboard Metrics -->
+      <section class="dashboard-cards">
+        <div class="dashboard-card">
+          <h3>Total Books </h3>
+          <p>{{book_count}}</p> <!-- Replace with dynamic data -->
+        </div>
+        <div class="dashboard-card">
+          <h3>Borrowed Books</h3>
+          <p>{{borrowed_book_count}}</p> <!-- Replace with dynamic data -->
+        </div>
+        <div class="dashboard-card">
+          <h3>Overdue Books</h3>
+          <p>{{overdue_count}}</p> <!-- Replace with dynamic data -->
+        </div>
+        <div class="dashboard-card">
+          <h3>Total Users</h3>
+          <p>{{user_count}}</p> <!-- Replace with dynamic data -->
+        </div>
+      </section>
+
+    </div>
+
+  </main><!-- End Main Content -->
+{% endblock content %}

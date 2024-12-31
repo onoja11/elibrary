@@ -1,0 +1,48 @@
+{% load static %}
+<nav id="navbar" class="p-3 md:flex md:items-center shadow-lg bg-white md:justify-between fixed inset-x-0 top-0 z-50 bg-transparent text-black">
+  <div class="flex justify-between items-center">
+    <span class="text-2xl font-[Poppins] cursor-pointer hover:text-green-500 duration-500">
+      <img class="h-10 inline" src="{% static 'image/Veritas-University-removebg-preview.png' %}" alt="">
+      
+    </span>
+    <button id="menu-toggle" class="text-3xl cursor-pointer mx-2 md:hidden block">
+      <ion-icon name="menu-outline"></ion-icon>
+    </button>
+  </div>
+  <ul id="menu" class="md:flex bg-white md:items-center z-[10] md:z-auto md:static absolute bg-transparent w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+    <li class="mx-4 my-6 md:my-0">
+      <a href="{% url 'nav_home' %}" class="text-base hover:text-green-500 duration-500 md:text-shadow">Home</a>
+    </li>
+    <li class="mx-4 my-6 md:my-0">
+      <a href="{% url 'global_search' %}" class="text-base hover:text-green-500 duration-500">Global Search</a>
+    </li>
+    <li class="mx-4 my-6 md:my-0">
+      <a href="{% url 'nav_dashboard' %}" class="text-base hover:text-green-500 duration-500 text-green">Dashboard</a>
+    </li>
+    <li class="mx-4 my-6 md:my-0 relative group">
+      <a href="{% url 'logout' %}" class="bg-green-700 p-3 px-6 rounded text-white duration-500" id="borrow">Logout</a>
+    </li>
+  
+  </ul>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', function() {
+      menu.classList.toggle('top-[-400px]');
+      menu.classList.toggle('opacity-0');
+    });
+
+    // Adjust menu visibility on window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) { // md breakpoint
+        menu.classList.remove('top-[-400px]', 'opacity-0');
+      } else {
+        menu.classList.add('top-[-400px]', 'opacity-0');
+      }
+    });
+  });
+</script>

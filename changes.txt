@@ -1,0 +1,26 @@
+CHange admin to circulation and technical services
+Divide admin role to circulation and technical services
+Only technical services can add books, circulation fns(lending, overdue books, overdue fines, )
+Collect form for cataloguing
+Remove level from library upload form
+CHange  borrowed books on dashboard nav to lending
+finalize barcode return feat
+Library inventory =>  lib collection
+Barcode => Qrcode
+Bolster activity featurer on the main admin portal
+Make logout last on dashboard nav
+Lib staff can also borrow
+Lib upload and staff upload view colors to black
+Change Returned column color to black
+
+Course mgt system: course outline , instructional material, lecture notes(book pages, journal articles, ...)
+deepen the colors
+organize the search result
+default limit of 2 book for seven days (post grad), staff 4, student 1-- can be changed by admin
+categorizing users by groups..
+whenever new material notify by email
+Remove select book to change
+Add feature for delete book, edit book
+category => subject
+Shelf Number => classification number
+Make the ui more attractive and colorful

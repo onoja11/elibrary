@@ -1,0 +1,44 @@
+{% load static %}
+{% load static tailwind_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% tailwind_css %}
+</head>
+<body class="bg-green-50">
+    {% include "core/partials/messages.html" %}
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-green-600 text-white py-6 px-8">
+                <h1 class="text-3xl font-bold">{{ book.Title }}</h1>
+                <p class="text-green-100 mt-2">By {{ book.Author }}</p>
+            </div>
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-green-800 mb-4">Book Details</h2>
+                        <p class="mb-2"><span class="font-medium text-green-700">Year Released:</span> {{ book.Year_Released }}</p>
+                        <p class="mb-2"><span class="font-medium text-green-700">Edition:</span> {{ book.Edition }}</p>
+                        <p class="mb-2"><span class="font-medium text-green-700">ISBN Number:</span> {{ book.ISBN_Number }}</p>
+                        <p class="mb-2"><span class="font-medium text-green-700">Shelf Number:</span> {{ book.Shelf_Number }}</p>
+                        <p class="mb-2"><span class="font-medium text-green-700">Number of Copies:</span> {{ book.Number_of_Copies }}</p>
+                    </div>
+                
+                </div>
+                
+            </div>
+            <div class="bg-green-100 px-8 py-4">
+                <a href="{% url "barcode_scan_page" %}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">Borrow Book</a>
+                <a href="{% url "book_borrow_page" book.id %}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">Borrow Book</a>
+                
+         <!--       <a href="{% url "book_borrow_page" book.id %}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">Borrow Book</a>-->
+                <a href="{% url "student_home_page" %}" class="inline-block bg-white text-green-600 px-4 py-2 rounded border border-green-600 hover:bg-green-50 transition duration-300 ml-4">Back to Search</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+{% extends "core/base.html" %}
+{% block title %}Borrow{% endblock title %}
+{% block body %}
+
+<style>
+    .page {
+        display: none; /* Hide all pages by default */
+        width: 100%;
+        background: #fff;
+        padding: 20px;
+    }
+    .page.active {
+        display: block; /* Show the active page */
+    }
+    .nav-item {
+        position: relative;
+        padding-bottom: 0.5rem; /* Space for the border */
+    }
+    .nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #10B981; /* Tailwind green-600 */
+        transition: width 0.3s ease;
+    }
+    .nav-item.active::after {
+        width: 100%;
+    }
+    /* Hide the right-hand side content on mobile devices */
+    @media (max-width: 1024px) {
+        .desktop-content {
+            display: none;
+        }
+    }
+</style>
+<body class="font-sans antialiased bg-gray-100">
+<div class="flex flex-col lg:flex-row">
+   
+
+    <!-- Right Hand Side Static Pages -->
+    <div class="w-full lg:w-1/2 flex flex-col h-screen overflow-hidden desktop-content">
+        <!-- Navigation Buttons -->
+        <div class="flex flex-wrap lg:flex-nowrap space-x-0 lg:space-x-4 p-4 bg-white shadow">
+            <button onclick="showPage('all', this)" class="nav-item text-green-600 md:py-2 md:px-4 px-2">All</button>
+            <button onclick="showPage('returned', this)" class="nav-item text-green-600 md:py-2 md:px-4 px-2">Returned</button>
+            <button onclick="showPage('not_returned', this)" class="nav-item text-green-600 md:py-2 md:px-4 px-2">Not Returned</button>
+            <button onclick="showPage('due', this)" class="nav-item text-green-600 md:py-2 md:px-4 px-2">Due</button>
+        </div>
+        <!-- Pages Content -->
+        <div class="relative flex-1 overflow-auto">
+            <!-- all starts -->
+            <div id="all" class="page active">
+                <h1 class="font-medium text-green-600 text-3xl">All Books</h1>
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 md:space-y-0 md:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Date Returned</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button class="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 active:bg-blue-700">Delete</button>
+                    </div>
+                </div>
+
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 lg:space-y-0 lg:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Due Date</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button class="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 active:bg-blue-700">Return</button>
+                    </div>
+                </div>
+
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 lg:space-y-0 lg:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Date Returned</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button class="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-500 active:bg-red-700">Pay Fine</button>
+                    </div>
+                </div>
+            </div>
+            <!-- all ends -->
+
+            <!-- returned starts -->
+            <div id="returned" class="page">
+                <h1 class="font-medium text-green-600 text-3xl">Returned Books</h1>
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 lg:space-y-0 lg:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Date Returned</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button type="button" class="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 active:bg-blue-700">Default</button>
+                    </div>
+                </div>
+            </div>
+            <!-- returned books ends -->
+
+            <!-- not returned starts -->
+            <div id="not_returned" class="page">
+                <h1 class="font-medium text-green-600 text-3xl">Not Returned Books</h1>
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 lg:space-y-0 lg:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Due Date</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button class="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-500 active:bg-blue-700">Return</button>
+                    </div>
+                </div>
+            </div>
+            <!-- not returned ends -->
+
+            <!-- due starts -->
+            <div id="due" class="page">
+                <h1 class="font-medium text-green-600 text-3xl">Due Books</h1>
+                <div class="w-full mt-5 p-4 shadow bg-white rounded mb-10">
+                    <!-- Book Information Section -->
+                    <div class="flex flex-wrap justify-between items-start space-y-4 lg:space-y-0 lg:space-x-8">
+                        <div class="flex-1">
+                            <h2 class="text-2xl font-semibold">Book Name</h2>
+                            <h3 class="text-lg font-medium">Author <span class="text-sm text-gray-600">release date</span></h3>                            
+                            <span class="text-sm text-gray-600">Date Borrowed</span>
+                            <span class="text-sm text-gray-600">Due Date</span>
+                        </div>
+                        <!-- Returned Button -->
+                        <button class="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-500 active:bg-red-700">Pay Fine</button>
+                    </div>
+                </div>
+            </div>
+            <!-- due ends -->
+        </div>
+    </div>
+</div>
+
+  <!-- Footer -->
+<footer class=" border-t-2 border-gray-400 text-black py-4 text-center">
+<div class="container mx-auto px-4">
+  <p class="text-sm mb-2">&copy; 2024 Veritas E-library. All rights reserved.</p>
+  <p class="text-xs">
+    <a href="mailto:info@veritaslibrary.com" class="hover:underline">info@veritaslibrary.com</a> | 
+    <a href="tel:+1234567890" class="hover:underline">+1 234 567 890</a>
+  </p>
+</div>
+</footer>
+<!-- End Footer -->
+
+<script>
+    function showPage(pageId, button) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => {
+            if (page.id === pageId) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+
+    // Set the default page to be visible when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultButton = document.querySelector('.nav-item:first-child'); // Default to 'All' page
+        showPage('all', defaultButton);
+    });
+
+    // Function to get query parameters from the URL
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            title: params.get('title'),
+            author: params.get('author'),
+            shelf: params.get('shelf'),
+            date: params.get('date')
+        };
+    }
+
+    // Populate the form with query parameters
+    function populateForm() {
+        const { title, author, shelf, date } = getQueryParams();
+        document.getElementById('book_name').value = title;
+        document.getElementById('author').value = author;
+        document.getElementById('shelf_number').value = shelf;
+        document.getElementById('date').value = date;
+    }
+
+    // Call the function to populate the form when the page loads
+    window.onload = populateForm;
+</script>
+{% endblock body %}

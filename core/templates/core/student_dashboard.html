@@ -1,0 +1,340 @@
+
+
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - Veritas E-library</title>
+  <link rel="icon" href="{% static "image/Veritas-University-removebg-preview.png" %}">
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static "image/favicon.png" %}" rel="icon">
+  <link href="{% static "image/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+  <link href="{% static "vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static "css/dist/style.css" %}" rel="stylesheet">
+  {% tailwind_css %}
+  <!-- Custom CSS for Header and Green-White Theme -->
+  <style>
+    body {
+      background-color: #f9f9f9; 
+      color: #333; 
+    }
+
+    .header {
+      background-color: #FFF; 
+      color: #fff; 
+    }
+
+    .header .logo img {
+      max-height: 40px; 
+    }
+
+    .header .logo span {
+      color: #fff; 
+    }
+
+    .header .nav-link {
+      color: #fff;
+    }
+
+    .nav-profile img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+
+    .nav-profile span {
+      color: #fff;
+      margin-right: 15px; 
+    }
+
+    .sidebar {
+      background-color: #fff; 
+      border-right: 1px solid #ddd;
+      width:170px;
+      height:fit-content;
+    }
+
+    .sidebar .nav-link {
+      color: #333; 
+    }
+
+    .sidebar .nav-link.active, .sidebar .nav-link:hover {
+      background-color: #28a745; 
+      color: #fff; 
+    }
+
+    .sidebar .nav-link i {
+      color: #28a745; 
+    }
+/*
+    .search-bar input {
+      border-color: #ddd; 
+      color: #333;
+    }
+
+    .search-bar button {
+      background-color: #28a745; 
+      color: #fff; 
+      border: none; 
+    }
+
+    .search-bar button:hover {
+      background-color: #218838; 
+    }
+*/
+    .dashboard-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .dashboard-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .dashboard-card h3 {
+      color: #28a745;
+    }
+
+    .dashboard-card p {
+      margin: 0;
+    }
+  </style>
+  {% tailwind_css %}
+
+</head>
+
+  
+
+  <body class="bg-green-50">
+ 
+    {% load static %}
+          {% block content %}
+     <!-- Right Hand Side Static Pages -->
+    
+
+
+     <header id="header" class="header fixed-top d-flex align-items-center">
+   
+       <div class="d-flex align-items-center justify-content-between">
+         <a href="{% url "student_dashboard_page" %}" class="logo d-flex align-items-center">
+           <img src="{% static "image/Veritas-University-removebg-preview.png" %}" alt="veritas">
+           <b></b> 
+          </a>   <i class="bi bi-list toggle-sidebar-btn " style="color: green;"></i>
+
+         </a>
+      
+       </div><!-- End Logo --> 
+   
+      
+   
+       <nav class="header-nav ms-auto">
+         <ul class="d-flex align-items-center">
+   
+            <a class="nav-link nav-profile d-flex align-items-center">
+              
+                <span class="">Welcome {{profile.user.username}}</span>
+           <!-- Profile Section in Navbar -->
+          
+   
+         </ul>
+       </nav><!-- End Icons Navigation -->
+   
+     </header><!-- End Header -->
+     {% include "core/partials/messages.html" %}
+     <!-- ======= Sidebar ======= -->
+     <aside id="sidebar" class="sidebar  h-100">
+       <ul class="sidebar-nav" id="sidebar-nav">
+           {% comment %} <i class="bi bi-list toggle-sidebar-btn" style="color: white;"></i> {% endcomment %}
+           <li class="nav-item">
+               <a class="nav-link collapsed" href="{% url "student_home_page" %}">
+                 <i class="bi bi-search"></i>
+                 <span>Search</span>
+               </a>
+
+               <!-- End Dashboard Nav -->
+             </li>
+             <li class="nav-item"> 
+              <a class="nav-link collapsed" href="{% url "lib_material_view_page" %}">
+                <i class="bi bi-door-open"></i>
+                <span>Library Uploads</span>
+              </a>
+            </li>
+             <li class="nav-item"> 
+              <a class="nav-link collapsed" href="{% url "student_material_view_page" %}">
+                <i class="bi bi-door-open"></i>
+                <span>Staff Uploads</span>
+              </a>
+            </li>
+            <!-- End Dashboard Nav -->
+         <li class="nav-item"> 
+           <a class="nav-link collapsed" href="{% url "student_dashboard_page" %}">
+             <i class="bi bi-grid"></i>
+             <span>Dashboard</span>
+             
+           </a>
+         </li><!-- End Dashboard Nav -->
+     
+         <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url "logout" %}">
+              <i class="bi bi-door-closed"></i>
+              <span>Logout</span>
+            </a>
+          </li><!-- End Library inventory Nav -->
+       </ul>
+   
+     </aside>
+     <!-- End Sidebar -->
+
+
+    <div class="min-h-screen bg-green-50">
+
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl mt-100 font-bold text-green-800 mb-8"></h1>
+            
+          
+            
+            <div class="bg-white w-75 mt-5 m-auto rounded-lg shadow-md overflow-hidden">
+                <h2 class="text-xl font-semibold text-green-800 p-6 bg-green-100"></h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-responsive ">
+                        <thead class="bg-green-200">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Book Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Author</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Borrow Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Due Date</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Overdue</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-green-700 uppercase tracking-wider">Returned</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-green-100">  
+                            {% for borrow in books %}
+                           
+                            <tr>
+                           
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ borrow.Book.Title }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ borrow.Book.Author }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ borrow.Borrowed_Date }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ borrow.Return_Date }}</td>
+                                <td class="py-2 px-4">     {% if borrow.Overdue %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Overdue</span>
+                                {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">On Time</span>
+                                {% endif %}</td>
+                                <td class="py-2 px-4"> 
+                                        {% if borrow.Returned %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Returned</span>
+                                {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Not returned</span>
+                                {% endif %}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"> <div class="text-center py-8">
+                                    <i class="fas fa-times text-green-500 text-5xl mb-4"></i>
+                                    <p class="text-xl text-gray-600">Wow such empty :)</p>
+                                </div></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="{% url "student_home_page" %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Browse More Books
+                </a>
+            </div>
+        </div>
+    </div>
+
+  
+</div>
+    {% endblock %}
+
+
+
+</body>
+  <!-- Vendor JS Files -->
+  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static "js/main.js" %}"></script>
+<script>
+    function showPage(pageId, button) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => {
+            if (page.id === pageId) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        button.classList.add('active');
+    }
+
+    // Set the default page to be visible when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultButton = document.querySelector('.nav-item:first-child'); // Default to 'All' page
+        showPage('Returned', defaultButton);
+    });
+
+    // Function to get query parameters from the URL
+  /*
+    function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            title: params.get('title'),
+            author: params.get('author'),
+            shelf: params.get('shelf'),
+            date: params.get('date')
+        };
+    }
+
+    // Populate the form with query parameters
+    function populateForm() {
+        const { title, author, shelf, date } = getQueryParams();
+        document.getElementById('book_name').value = title;
+        document.getElementById('author').value = author;
+        document.getElementById('shelf_number').value = shelf;
+        document.getElementById('date').value = date;
+    }
+
+    // Call the function to populate the form when the page loads
+    window.onload = populateForm;
+  */
+</script>
+</html>

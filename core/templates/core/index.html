@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Veritas University E-Library{% endblock title %}
+
+{% block body %}
+<body class="min-h-screen bg-[url('/static/imge/karsten-winegeart-eXFG9dM_1f8-unsplash.jpg')] bg-no-repeat bg-cover bg-center p-4 sm:p-6 md:p-8 overflow-hidden flex items-center justify-center">
+    <section class="w-full max-w-4xl shadow-lg mx-auto text-center bg-white  p-8 rounded-lg border border-white border-opacity-20">
+        <img class="h-9 inline" src="{% static 'image/Veritas-University-removebg-preview.png' %}" alt="">
+
+        <h2 class="text-green-800 text-2xl sm:text-3xl md:text-4xl mt-8 sm:mt-16 md:mt-24 font-semibold font-serif ">Welcome To</h2>
+
+        <h1 class="text-green-800 text-4xl sm:text-5xl md:text-2xl font-bold mt-2 sm:mt-3 md:mt-4 mb-6 sm:mb-8 md:mb-10 font-serif"> Veritas University E-Library</h1><!--Add vuna logo and reduce font size-->
+        
+        <div class="flex flex-row sm:flex-row justify-center p-5 gap-4 sm:gap-6 md:gap-8 pt-3">
+            <a href="{% url "student_login_page" %}" class="w-full sm:w-auto bg-green-900 sm:w-48 md:w-64 p-2 px-8 sm:p-3 rounded-lg text-white font-bold text-sm sm:text-base md:text-lg hover:bg-green-800 transition duration-300 ease-in-out">
+                <i class="fas fa-graduation-cap text-white"></i> Student
+            </a>
+            <a href="{% url "lecturer_login_page" %}" class="w-full sm:w-auto bg-green-900 w-full sm:w-48 md:w-64 p-2 px-8 sm:p-3 rounded-lg text-white font-bold text-sm sm:text-base md:text-lg hover:bg-green-800 transition duration-300 ease-in-out">
+                <i class="fas fa-chalkboard-teacher"></i> Staff
+            </a>
+            <a href="{% url "staff_login_page" %}" class="w-full bg-green-900 w-full sm:w-48 md:w-64 p-2 px-8 sm:p-3 rounded-lg text-white font-bold text-sm sm:text-base md:text-lg hover:bg-green-800 transition duration-300 ease-in-out sm:w-auto sm:col-span-2">
+                <i class="fas fa-user-shield"></i> Admin
+            </a>
+        </div>
+    </section>
+</body>
+{% endblock body %}

@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+
+{% block title %}Create Profile{% endblock title %}
+
+{% block body %}
+<body class="bg-[url('/static/imge/karsten-winegeart-eXFG9dM_1f8-unsplash.jpg')] bg-no-repeat bg-cover bg-center min-h-screen flex items-center justify-center">
+    <div class="border-solid max-w-sm w-full p-6 shadow-lg mx-auto bg-white  rounded-xl">
+        <h1 class="text-4xl font-bold text-green-800 mb-6 text-center">Create Profile</h1>
+        
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="p-4 {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %} rounded-lg">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <form class="space-y-6" method="post" action="{% url 'profile_update' %}">
+            {% csrf_token %}
+            
+           
+            
+            <div  class=" mb-10 ">
+                <label for="phone_number" class="block mb-2 text-sm font-medium text-white">Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+            
+            <button type="submit" class="w-full text-white bg-green-700 hover:bg-green-800  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition duration-200">
+                Complete Profile
+            </button>
+        </form>
+    </div>
+</body>
+{% endblock body %}

@@ -1,0 +1,57 @@
+{% extends "core/base.html" %}
+
+{% block title %}Reg{% endblock title %}
+
+{% block body %}
+{% comment %} <body class="h-screen bg-fixed bg-[url('/static/image/karsten-winegeart-eXFG9dM_1f8-unsplash.jpg')] bg-no-repeat bg-center bg-auto"> {% endcomment %}
+<body class="h-screen bg-fixed bg-[url('/static/image/arsten-winegeart-eXFG9dM_1f8-unsplash.jpg')] bg-no-repeat bg-center bg-auto">
+    
+    <div class=" max-w-sm   rounded-xl p-8 shadow-lg mt-8 bg-white  m-auto  overflow-hidden" id="form">
+      <h1 class="mt-5 text-4xl font-bold text-green-700">Student Signup</h1><br>
+        <form class="max-w-sm mx-auto" method="post" action="{% url 'student_registration_page' %}">
+           {% csrf_token %}
+        
+           {% for field in form %}
+           <div class="mb-4">
+            <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-green-700">{{ field.label }}</label>
+            {% if field.name == 'password1' %}
+              <div class="relative">
+                {{ field }}
+                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-white mb-10" onclick="togglePasswordVisibility()">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="eye-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                </button>
+              </div>
+            {% else %}
+              {{ field }}
+            {% endif %}
+          </div>
+           {% endfor %}
+            <button type="submit" class="text-white mb-2 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Submit</button>
+          </form>   
+          <p class="text-black  ">Already have an account? <a href="{% url 'student_login_page' %}" class="text-green-700 font-bold">Login</a></p>
+    </div>
+
+    <script>
+      function togglePasswordVisibility() {
+        var passwordField = document.getElementById('password1');
+        const eyeIcon = document.getElementById('eye-icon');
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+      `;
+          
+        } else {
+          passwordField.type = 'password';
+          eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      `;
+        }
+      }
+    </script>
+</body>
+{% endblock body %}

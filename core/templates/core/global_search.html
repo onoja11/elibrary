@@ -1,0 +1,258 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block body %}
+<style>
+    /* Root Variables */
+    :root {
+        --background-color: rgba(0, 0, 0, 0.8);   
+        --transition: transform 0.3s ease-in-out;
+        --primary-color: #28a745; /* Green */
+        --secondary-color: #ffffff; /* White */
+        --hover-color: #218838; /* Darker Green for hover */
+    }
+
+    /* Search Bar */
+    .search-fixed {
+        position: fixed;
+        top: 65px;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        transition: var(--transition);
+        transform: translateY(0);
+        background-color: var(--background-color);
+        padding-top: 1rem;
+    }
+
+    .search-normal {
+        transform: translateY(100px);
+        position: relative;
+        top: 60px;
+    }
+
+    .header-hidden {
+        display: none;
+    }
+
+    .header-visible {
+        display: block;
+    }
+    .book-tile {
+        background-color: #28a745;
+    }
+    .book-tile:hover {
+        box-shadow: 0 10px 15px -3px rgba(40, 167, 69, 0.3), 0 4px 6px -2px rgba(40, 167, 69, 0.2);
+    }
+    #results {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 90;
+        border-top: 2px solid var(--primary-color);
+        padding: 1rem;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .text-shadow {
+        text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    }
+
+    /* Hero Section */
+    #header-container {
+        {% comment %} background: linear-gradient(to bottom, white, rgba(0, 9, 0, 0.5)), url('/static/imge/karsten-winegeart-eXFG9dM_1f8-unsplash.jpg') no-repeat center center/cover; {% endcomment %}
+        background-color: white;
+        height: 100vh;
+        color: var(--secondary-color);
+        border-bottom: 4px solid var(--primary-color);
+    }
+
+    /* Search Input */
+    .search-input {
+        background-color: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--secondary-color);
+        padding: 0.75rem 1rem;
+        border-radius: 1rem;
+        width: 100%;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input::placeholder {
+        color: var(--hover-color);
+    }
+
+    .search-input:focus {
+        border-color: var(--hover-color);
+    }
+
+    /* Results */
+    #results-list li {
+        background-color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    #results-list li:hover {
+        background-color: var(--hover-color);
+        transform: scale(1.05);
+    }
+
+    #results-list li a {
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+
+    #results-list li strong {
+        color: var(--secondary-color);
+    }
+
+    /* Footer */
+    footer {
+        {% comment %} background-color: var(--primary-color);    {% endcomment %}
+        color: var(--secondary-color);
+        padding: 1rem 0;
+    }
+
+    footer a {
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <div id="header-container" class="relative">
+        {% include "core/partials/student_nav.html" %}
+        {% include "core/partials/messages.html" %}
+        <!-- Search Form -->
+        <div id="search-form-container" class="relative grid  place-content-center p-10 search-normal transition-transform duration-300 ease-in-out">
+            <form id="search-form" class="relative flex flex-col items-center lg:w-[900px]">
+                <h1 id="header" class="text-4xl font-bold md:text-4xl lg:text-6xl pb-4 text-green    text-center">Find Your Next Read From Our Global Repo</h1>
+                <div class="mt-4 w-full max-w-md md:max-w-3xl rounded-xl">
+                    <input type="text" id="search-input" class="search-input h-12 w-full " placeholder="Search books...">
+                </div>
+            </form>
+        </div>
+
+        <!-- Search Results -->
+        <div id="results" class="hidden relative mt-24">
+            <h2 class="text-2xl font-bold text-center py-4">Search Results:</h2>
+           
+            <div id="results-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-green-600 bg-white">
+        <div class="container mx-auto px-4">
+            <p class="text-sm mb-2">&copy; 2024 Veritas E-library. All rights reserved.</p>
+            <p class="text-xs text-green-600">
+                <a href="mailto:info@veritaslibrary.com" class="text-gray-600">info@veritaslibrary.com</a> |      
+                <a href="tel:+1234567890" class="text-gray-600">+1 234 567 890</a>
+            </p>
+        </div>
+    </footer>
+
+    {% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const resultsList = document.getElementById('results-list');
+        const resultsDiv = document.getElementById('results');
+        const header = document.getElementById('header');
+        const searchFormContainer = document.getElementById('search-form-container');
+
+        let debounceTimer;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = this.value.trim();
+                if (query.length > 0) {
+                    axios.get('{% url "search_api" %}', {
+                        params: { q: query }
+                    })
+                    .then(function (response) {
+                        displayResults(response.data);
+                    })
+                    .catch(function (error) {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    resultsDiv.classList.add('hidden');
+                }
+            }, 300);  // 300ms debounce
+        });
+
+        function displayResults(results) {
+            resultsList.innerHTML = "";
+            if (results.length === 0) {
+                resultsList.innerHTML = "<li class='text-white justify-center flex align-center'>No results found.</li>";
+            } else {
+                results.forEach(book => {
+                    resultsList.innerHTML += `
+       <div class="book-tile shadow-md rounded-lg overflow-hidden transition-all hover:shadow-lg">
+        <div class="p-6">
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-lg font-bold text-white line-clamp-2">${ book.Title }</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 flex-shrink-0">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <p class="text-sm text-white mb-4">by ${ book.Author }</p>
+        </div>
+        <a href="/books/book_view/${book.id}" class="block bg-green-500 text-white text-center py-2 hover:bg-gray-100 transition-colors">
+            View Details
+        </a>
+    </div>
+ `;
+
+                   
+                });
+            }
+            resultsDiv.classList.remove('hidden');
+        }
+
+        searchInput.addEventListener('click', function(event) {
+            event.stopPropagation();
+            header.classList.add('header-hidden');
+            searchFormContainer.classList.remove('search-normal');
+            searchFormContainer.classList.add('search-fixed');
+            resultsDiv.classList.remove('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!searchFormContainer.contains(event.target) && !resultsDiv.contains(event.target)) {
+                header.classList.remove('header-hidden');
+                searchFormContainer.classList.remove('search-fixed');
+                searchFormContainer.classList.add('search-normal');
+                resultsDiv.classList.add('hidden');
+            }
+        });
+
+        // Mobile menu toggle
+        function Menu(e) {
+            let list = document.querySelector('ul');
+            e.name === 'menu-outline' ? (e.name = "close-outline", list.classList.add('top-[64px]'), list.classList.add('opacity-100')) : (e.name = "menu-outline", list.classList.remove('top-[64px]'), list.classList.remove('opacity-100'));
+        }
+    });
+    </script>
+    {% endblock %}
+</body>
+{% endblock body %}

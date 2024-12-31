@@ -1,0 +1,104 @@
+{% extends "core/staff_base.html" %}
+
+{% block content %}
+<style>
+
+.table-responsive {
+    margin-top: 20px;
+  }
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.pagination-info {
+    color: #4b5563;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.pagination-button {
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #2563eb;
+}
+
+</style>
+
+<main id="main" class="main">
+
+    <div class="container">
+      <h1 class="page-title">Library Inventory</h1>
+      {% if books %}<!--Add search functionality-->
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Book Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Category</th>
+              <th scope="col">Published Date</th>
+              <th scope="col">Shelf Number</th>
+              <th scope="col">ISBN Number</th>
+              <th scope="col">Copies Available</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for book in books.object_list %}
+          <tr>
+            <td>{{book.Title}}</td>
+            <td>{{book.Author}}</td>
+            <td>{{book.Category}}</td>
+            <td>{{book.Year_Released}}</td>
+            <td>{{book.Shelf_Number}}</td>
+            <td>{{book.ISBN_Number}}</td>
+            <td>{{book.Number_of_Copies}}</td>
+          </tr>
+          <tr>
+          {% endfor %}
+             
+            </tr>
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+        <div class="pagination">
+          <div class="pagination-info">
+              <span>Showing entry {{books.number}}</span>
+          </div>
+          <div class="pagination-buttons">{% if books.has_previous %}
+              <button class="pagination-button" disabled> 
+                  <a href="?page={{books.previous_page_number}}"> Previous </a>
+                  </button>
+                  {% endif %}
+                     <span>{{shifts.number}}</span>{% if books.has_next %}
+              <button class="pagination-button" disabled> 
+                  <a href="?page={{books.next_page_number}}">Next</a>
+                 </button> {% endif %}
+          </div>
+      </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <i class="fas fa-times text-green-500 text-5xl mb-4"></i>
+        <p class="text-xl text-gray-600">Wow such empty :)</p>
+    </div>
+  {% endif %}
+
+  </main><!-- End Main Content -->
+
+{% endblock content %}

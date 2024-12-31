@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Writings</title>
+    <link rel="icon"  type="image/png"href="/static/image/Veritas-University-removebg-preview.png">
+        <link rel="stylesheet" href="/static/css/dist/style.css">
+
+
+<!--
+        
+        
+  <link href="/static/images/favicon.png" rel="icon">
+  <link href="/static/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+ 
+  <link href="https://fonts.gstatic.com" rel="preconnect">``
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+-->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    
+
+<link rel="stylesheet" href="/static/css/dist/styles.css?v=1726222383">
+
+
+
+
+</head>
+
+<script>
+function closeMessage(messageId) {
+    const message = document.getElementById(messageId);
+    message.style.maxHeight = '0';
+    message.style.opacity = '0';
+    setTimeout(() => message.remove(), 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const messages = document.querySelectorAll('#messages-container > div');
+    messages.forEach((message, index) => {
+        message.style.maxHeight = message.scrollHeight + 'px';
+        setTimeout(() => closeMessage(message.id), 5000 + index * 500);
+    });
+});
+</script>
+
+<div class="min-h-screen bg-green-50">
+    <div class="container mx-auto px-4 py-8">
+        
+<script>
+function closeMessage(messageId) {
+    const message = document.getElementById(messageId);
+    message.style.maxHeight = '0';
+    message.style.opacity = '0';
+    setTimeout(() => message.remove(), 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const messages = document.querySelectorAll('#messages-container > div');
+    messages.forEach((message, index) => {
+        message.style.maxHeight = message.scrollHeight + 'px';
+        setTimeout(() => closeMessage(message.id), 5000 + index * 500);
+    });
+});
+</script>
+        
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-green-600 text-white py-6 px-8">
+                <h1 class="text-3xl font-bold">Staff Writings</h1>
+            </div>
+            
+            
+            <div class="p-8 border-b">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">Upload Your Writing</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="gxg2pQLjA3VUIhH4MJJ4lIrbPBPPMbG5gT1TaSkgJmNlgOSJwUdFmaLaSEeTfTnR">
+                    
+                    <div class="form-group">
+                        <input type="submit" value="Upload Writing" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300">
+                    </div>
+                </form>
+            </div>
+            
+            
+            <div class="p-8">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">Available Writings</h2>
+                
+                    <p>No writings available at the moment.</p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Book Barcode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body class="bg-green-50">
+    <div class="min-h-screen bg-green-50">
+        <div class="container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-green-600 text-white py-6 px-8">
+                    <h1 class="text-3xl font-bold">Scan Book Barcode</h1>
+                    <p class="text-green-100 mt-2">Please scan the barcode of the book you wish to view</p>
+                </div>
+
+                <div class="p-8">
+                    <div id="reader" class="mx-auto"></div>
+                    <p id="result" class="mt-4 text-center text-lg font-medium text-green-700"></p>
+                </div>
+
+                <div class="bg-green-100 px-8 py-4">
+                    <a href="{% url 'student_home_page' %}" class="text-green-600 hover:text-green-800 transition duration-300 ease-in-out">← Back to Book List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById('result').textContent = `Barcode scanned: ${decodedText}`;
+            // Making an AJAX call to your server
+            fetch(`{% url 'process_barcode' %}?barcode=${decodedText}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        document.getElementById('result').textContent = data.error;
+                    }
+                });
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR error: ${error}`);
+        }
+
+        // Initialize the Html5QrcodeScanner
+        function initializeScanner() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                let html5QrcodeScanner = new Html5QrcodeScanner(
+                    "reader",
+                    { fps: 10, qrbox: { width: 250, height: 250 } },
+                    false
+                );
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            } else {
+                document.getElementById('result').textContent = "Camera not supported or permissions not granted. Please enable camera access and try again.";
+            }
+        }
+
+        // Run the scanner initialization
+        window.addEventListener('load', initializeScanner);
+    </script>
+</body>
+</html>

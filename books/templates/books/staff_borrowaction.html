@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.Book.Title }} - Book Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 min-h-screen">
+    {% include "core/partials/messages.html" %}
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-green-500 text-white px-6 py-4">
+                <h1 class="text-3xl font-bold">{{ book.Book.Title }}</h1>
+                <p class="text-green-100">by {{ book.Book.Author }}</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h2 class="text-xl font-semibold mb-2">Book Details</h2>
+                        <p><strong>Shelf Number:</strong> {{ book.Book.Shelf_Number }}</p>
+                        <p><strong>Release_Year:</strong> {{ book.Book.Year_Released }}</p>
+                        <p><strong>Category:</strong> {{ book.Book.Category }}</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold mb-2">Borrowing Information</h2>
+                        <p><strong>Borrower:</strong> {{ book.User.get_full_name }}</p>
+                        <p><strong>Borrowed Date:</strong> {{ book.Borrowed_Date|date:"F d, Y" }}</p>
+                        <p><strong>Due Date:</strong> {{ book.Return_Date|date:"F d, Y" }}</p>
+                        <p><strong>Status:</strong> 
+                            {% if book.Returned %}
+                                <span class="text-green-600 font-semibold">Returned</span>
+                            {% elif book.Overdue %}
+                                <span class="text-red-600 font-semibold">Overdue</span>
+                            {% else %}
+                                <span class="text-yellow-600 font-semibold">Borrowed</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                
+             
+
+                {% if not book.Returned %}
+                    <div class="mt-8">
+                      
+                            <a href="{% url 'return_book' book.id %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out flex items-center justify-center w-full md:w-auto">
+                                <i class="fas fa-check mr-2"></i>
+                            
+                                Mark as Returned
+                            </a>
+                 
+                    </div>
+                    {% else %}
+                    <p  class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out flex items-center justify-center w-full md:w-auto">
+                       
+                    
+                      Nothing wasing to the doing :)
+                    </p>
+                    
+                {% endif %}
+              
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <a href="{% url 'staff_borrowview_page' %}" class="text-green-600 hover:text-green-800 transition duration-300 ease-in-out">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Borrowed Books List
+            </a>
+        </div>
+    </div>
+</body>
+</html>

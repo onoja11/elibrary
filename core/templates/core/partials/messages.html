@@ -1,0 +1,35 @@
+{% if messages %}
+{% for message in messages %}
+<div id="messages-container" class="fixed top-0 left-0 w-full right-0 z-50">
+    <div id="message-{{ forloop.counter }}" class="p-4 transform transition-all  duration-300 ease-in-out flex items-center justify-between
+        {% if message.tags == 'error' %}bg-red-100 text-red-700 font-bold
+        {% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-700 font-bold
+        {% elif message.tags == 'success' %}bg-green-100 text-green-700 font-bold
+        {% else %}bg-blue-100 text-blue-700{% endif %}">
+        <div class="container mx-auto flex justify-between text-center">
+            <p>{{ message }}</p>
+            <button onclick="closeMessage('message-{{ forloop.counter }}')" class="ml-3 text-sm hover:text-gray-600">
+                &times;
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+    
+</div>
+{% endif %}
+<script>
+function closeMessage(messageId) {
+    const message = document.getElementById(messageId);
+    message.style.maxHeight = '0';
+    message.style.opacity = '0';
+    setTimeout(() => message.remove(), 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const messages = document.querySelectorAll('#messages-container > div');
+    messages.forEach((message, index) => {
+        message.style.maxHeight = message.scrollHeight + 'px';
+        setTimeout(() => closeMessage(message.id), 5000 + index * 500);
+    });
+});
+</script>

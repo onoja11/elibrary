@@ -1,0 +1,40 @@
+<!-- fine/payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Overdue Fine Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <form action="{% url 'process_payment' %}" method="POST" id="payment-form">
+        {% csrf_token %}
+        <label for="amount">Overdue Fine Amount</label>
+        <input type="number" name="amount" id="amount" required>
+        <div id="card-element"></div>
+        <button type="submit">Pay Fine</button>
+    </form>
+
+    <script>
+        const stripe = Stripe("{{ pk_test_51QBlHeKPCoKiCaxp7FfpabGRRCGfo6M1Wz1MpUNccQrFGfmUTxXrz5s04YtAqp0wHu1QtpiSCV55TjSRzXqPR5oU002VqdzKuV }}");
+        const elements = stripe.elements();
+        const card = elements.create("card");
+        card.mount("#card-element");
+
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const { token, error } = await stripe.createToken(card);
+            if (error) {
+                console.error(error);
+            } else {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            }
+        });
+    </script>
+</body>
+</html>
